@@ -22,7 +22,7 @@ export default class PostListitem extends React.Component{
 
     render() {
 
-        const {label, onDelete} = this.props
+        const {label, onDelete, onToggleImportant, onToggleLiked} = this.props
         const {important, like} = this.state
         let classNames = "app-list-item d-flex justify-content-between"
         if (important){
