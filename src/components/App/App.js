@@ -11,9 +11,9 @@ export default class App extends React.Component{
         super(props)
         this.state = {
             data: [
-                {label: "React haqida", important: false, id: 1},
-                {label: "Js haqida", important: false, id: 2},
-                {label: "Python haqida", important: false, id: 3}
+                {label: "React haqida", important: false, like: false, id: 1},
+                {label: "Js haqida", important: false, like: false, id: 2},
+                {label: "Python haqida", important: false, like: false, id: 3}
             ]
         }
         this.deleteItem = this.deleteItem.bind(this)
@@ -59,13 +59,27 @@ export default class App extends React.Component{
     }
 
     onToggleLiked(id){
-        console.log(id);
+        this.setState(({data})=>{
+            const index = data.findIndex(elem => elem.id === id)
+            const oldItem = data[index]
+            const newItem = {...oldItem, like: !oldItem.like}
+ 
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)]
+
+            return{
+                data: newArr
+            }
+        })
     }
 
     render(){
+        
+        const liked = this.state.data.filter(item => item.like).length
+        const allPosts = this.state.data.length
+        
         return(
         <div className="app">
-        <AppHeader/>
+        <AppHeader liked={liked} allPosts={allPosts}/>
         <div className="search-panel d-flex ">
             <SearchPanel />
             <PostStatusFilter />
